@@ -1,0 +1,86 @@
+/* The CSS for Document Uploader
+*  Copyright 2011 Hunter Lang
+*/
+body{ font: 75.5% "Trebuchet MS", sans-serif; margin: 50px;}
+.demoHeaders { margin-top: 2em; }
+#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+.file_upload {
+  background-image: url('../images/button.gif');
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 300px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  text-shadow: 1px 1px 1px white;
+  text-align: center;
+  font-weight: bold;
+  font: 100% 17pt;
+  width: 164px;
+  height: 36px;
+  line-height: 30px;
+}
+
+.file_upload_small {
+  background-image: url('../images/button.gif');
+
+  width: 164px;
+  height: 36px;
+  line-height: 30px;
+  font-size: auto;
+  /*background: palegreen;*/
+  /*border: 1px solid limegreen;*/
+}
+
+.file_upload_large {
+  background-image: url('../images/button.gif');
+  width: 100%;
+  height: 150px;
+  line-height: 150px;
+  font-size: 20px;
+  /*background: palegreen;*/
+  /*border: 1px solid limegreen;*/
+}
+
+.file_upload_highlight {
+  /*background: lawngreen;*/
+}
+
+.file_upload input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  border: 300px solid transparent;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  filter: alpha(opacity=0);
+  -o-transform: translate(-300px, -300px) scale(10);
+  -moz-transform: translate(-800px, 0) scale(10);
+  cursor: pointer;
+}
+
+.file_upload iframe, .file_upload button {
+  display: none;
+}
+
+.file_upload_preview img {
+  width: 80px;
+}
+
+.file_upload_progress .ui-progressbar-value {
+  /*background: url(pbar-ani.gif);*/
+
+}
+
+.file_upload_progress div {
+  width: 150px;
+  height: 15px;
+
+}
+
+.file_upload_cancel button {
+  cursor: pointer;
+
+}
