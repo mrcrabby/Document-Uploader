@@ -2,18 +2,7 @@
 #
 # Copyright 2011 Hunter Lang
 #
-# Licensed under the Apache License, Version 2.0 (the "License"); you may
-# not use this file except in compliance with the License. You may obtain
-# a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-# License for the specific language governing permissions and limitations
-# under the License.
-
+# MIT Liscence
 import logging
 import os.path
 import re
@@ -30,9 +19,7 @@ import os.path
 import random
 import sys
 import commands
-import datetime
-import pyPdf
-from mmap import mmap
+
 
 from tornado.options import define, options
 
@@ -45,7 +32,6 @@ class Application(tornado.web.Application):
 			(r"/", IndexHandler),
 			(r"/static", IndexHandler),
 			(r"/test", TestHandler),
-			(r"/logtest", LogHandler),
 
 			
         ]
@@ -61,72 +47,36 @@ class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
 		#output_file.write(remoteIP)
 		self.redirect("/static/index.html")
-		
-class LogHandler(tornado.web.RequestHandler):
-	@tornado.web.asynchronous
-	def post(self):
-		self.finish("hey")
 
 class TestHandler(tornado.web.RequestHandler):
 	@tornado.web.asynchronous
 	def post(self):
 		file_content = self.request.files['file'][0]
 		file_body = file_content['body']
-		filename = file_content['filename']
-		print filename
-
-		output_file = open("docs/" + filename, 'w')
+		filename = file_content['filename']		
+		random_file_name = rand_str(8) + os.path.splitext(filename)[1]
+		output_file = open("docs/" + random_file_name, 'w')
 		output_file.write(file_body)
 		output_file.close()
-		
-		
-		
-		ext = os.path.splitext(filename)[1]
-		if ext == ".doc" or ext == ".docx":
-			print "It's a doc! It's a doc! -Admiral Ackbar"
-			commands.getstatusoutput('textutil -convert txt docs/' + filename)
-
-		elif ext == ".pages":
-			os.rename(filename, (os.path.splitext(filename)[0] + ".zip"))
-			commands.getstatusoutput('unzip -j ' + filename + ' QuickLook/Preview.pdf')
-			pdf = pyPdf.PdfFileReader(open("Preview.pdf", "rb"))
-			n = open(os.path.splitext(filename)[0] + ".txt", "w")
-			for page in pdf.pages:
-				n.write(unicode(page.extractText(), "utf-8", errors="replace"))
-			n.close()
-		else:
+		path = random_file_name
+		name = 'Hunter Lang'
+		subject = 'English 9 Honors'
+		var = commands.getstatusoutput('python core.py ' + path + ' Hunter\ Lang' + ' English\ 9\ Honors' + ' 4' + ' test')
+		print var[1]
+		if var[1][-5:] != ".html":
 			val = {
-				"URL": "That file type is currently unsupported by Document Uploader."
+				"URL": "Something went wrong during conversion. Make sure you're adhering to the guidelines in the Upload Guide, and if problems persist, contact me."
 			}
 			self.finish(val)
-		
-		str = os.path.splitext(filename)[0]
-		f = open("docs/" + str + ".txt")
-		pref = open('prefix.txt')
-		prefix = pref.read()
-					
-		name = "Hunter Lang"
-		subject = "English 9 Honors"
-		date = "May 14, 2011"
-		period = 4
-		perstr = "Period " + repr(period)
-		title = "This is a jQuery test."
-		str = rand_str(8)
-		temp = open('docs/' + str + '.html', 'w')
-		temp.write(prefix)
-		temp.write(name + "<br>" + subject + "<br>" + date + "<br>" + perstr + "<br><br>")
-		temp.write('</div><div id="title"; align="center">' + title + '<br><br></div><div id="content"; align="left">')
-		for line in f:
-			temp.write(line)
-		temp.write('</div>')
-		f.close()
-		os.system("rm -f " + str + ".txt")
-		temp.close()
-		val = {
-				"URL": "http://hunterlang.com/doc/docs/" + str + ".html",
-
+		else:
+			val = {
+				"URL": "http://hunterlang.com/doc/" + var[1]
 			}
-		self.finish(val)
+			self.finish(val)
+	def terminalize(string):
+		string.replace(' ', '\ ')
+		return string
+
 	
 def rand_str(leng):
     nbits = leng * 6 + 1
