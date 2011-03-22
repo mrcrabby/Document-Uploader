@@ -36,16 +36,13 @@ class Application(tornado.web.Application):
 			
         ]
         
-        #print "Image Server is now running on port 8080...."
         settings = dict(
             static_path=os.path.join(os.path.dirname(__file__), "static"),
         )
         tornado.web.Application.__init__(self, handlers, **settings)
 
-# Redirects to the Cappuccino app
 class IndexHandler(tornado.web.RequestHandler):
 	def get(self):
-		#output_file.write(remoteIP)
 		self.redirect("/static/index.html")
 
 class TestHandler(tornado.web.RequestHandler):

@@ -1,8 +1,15 @@
 #!/usr/bin/env python
-# Pass this application the path to an uploaded document. It prints the path of the newly created HTML file.
-# Copyright Hunter Lang 2011
-# ************** Assumes all paths start with 'doc/' *****************
-# MIT Liscense
+# Pass this application the path or name of an uploaded document. It prints the path of the newly created HTML file.
+#
+# It assumes all paths start with docs/, so if the application you're calling this from is in ../docs, just pass 
+# the name of the file.
+#
+# ***** Relies on textutil to convert .doc's and .docx's. *****
+# To the extent of my knowledge, textutil is exclusive to OS X, but appears to have originated in BSD.
+# Therefore, unless someone has ported it to other os'es, this code *****REQUIRES MAC OS X*****
+#
+# Copyright 2011 Hunter Lang
+# MIT Liscence
 import sys
 import os
 import os.path
